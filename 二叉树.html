@@ -163,14 +163,14 @@
     let strArr = 'AB#D##C##'.split('');
 
     //树节点
-    function jsTree(ele) {
+    function JsTree(ele) {
         this.data = ele;
         this.lChild = null;
         this.rChild = null;
     }
 
     // 最后一个节点暂时为#
-    var newTree = new jsTree('#');
+    var newTree = new JsTree('#');
 
     function createTree(jsTree) {
         // 二叉树序列为空
@@ -185,7 +185,7 @@
         // 第一个节点不为#
         if (strArr[0] != '#') {
             // 继续左孩子
-            jsTree.lChild = new jsTree('#')
+            jsTree.lChild = new JsTree('#')
         }
         
         // 递归左孩子
@@ -193,7 +193,7 @@
         // 左孩子不为#
         if (strArr[0] != '#') {
             // 继续右孩子
-            jsTree.rChild = new jsTree('#')
+            jsTree.rChild = new JsTree('#')
         }
         // 递归右孩子
         createTree(jsTree.rChild);
