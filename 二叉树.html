@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script type="text/javascript">
+    /**
+     * 二叉树遍历方式：
+     * 前序遍历：先遍历根结点，然后左子树，再右子树
+     * 中序遍历：先遍历左子树，然后根结点，再右子树
+     * 后续遍历：先遍历左子树，然后右子树，再根结点
+    */
+
+    // 树
+    function Tree() {
+        // 树节点
+        let JsTreeNode = function (ele) {
+            // 值
+            this.data = ele;
+            // 左孩子
+            this.lChild = null;
+            // 右孩子
+            this.rChild = null;
+        }
+
+        // 树的创建
+        this.createTree = function () {
+            // 根节点
+            let A = jsTree = new JsTreeNode('A');
+            // 左孩子
+            let B = A.lChild = new JsTreeNode('B');
+            // 右孩子
+            let C = A.rChild = new JsTreeNode('C');
+            let D = B.lChild = new JsTreeNode('D');
+            let G = D.lChild = new JsTreeNode('G');
+            let H = D.rChild = new JsTreeNode('H');
+            let E = C.lChild = new JsTreeNode('E');
+            let F = C.rChild = new JsTreeNode('F');
+            let I = E.rChild = new JsTreeNode('I');
+            //以根节点代表树
+            return jsTree;
+        }
+        /**大概长这样，没连线
+         *                  A
+         *               B     C
+         *            D      E   F
+         *          G   H      I
+        */
+
+    }
+
+    //前序遍历
+    function ProOrderTraverse(jsTree) {
+        // 如果树为空
+        if (jsTree == null) return;
+        // 自己的值
+        console.log(jsTree.data);
+        // 递归左孩子
+        ProOrderTraverse(jsTree.lChild);
+        // 递归右孩子
+        ProOrderTraverse(jsTree.rChild);
+    }
+
+    //中序遍历
+    function InOrderTraverse(jsTree) {
+        // 如果树为空
+        if (jsTree == null) return;
+        // 递归左孩子
+        InOrderTraverse(jsTree.lChild);
+        // 自己的值
+        console.log(jsTree.data);
+        // 递归右孩子
+        InOrderTraverse(jsTree.rChild);
+    }
+
+    //后续遍历
+    function PostOrderTraverse(jsTree) {
+        // 如果树为空
+        if (jsTree == null) return;
+        // 递归左孩子
+        PostOrderTraverse(jsTree.lChild);
+        // 递归右孩子
+        PostOrderTraverse(jsTree.rChild);
+        // 自己的值
+        console.log(jsTree.data);
+    }
+
+    let myTree = new Tree();
+    let RootNode = myTree.createTree();
+    console.log(RootNode);
+    console.log('前序遍历')
+    ProOrderTraverse(RootNode);
+    console.log('中序遍历')
+    InOrderTraverse(RootNode);
+    console.log('后续遍历')
+    PostOrderTraverse(RootNode);
+
+
+    //深度优先遍历....非递归
+    //栈的先进后出
+    function DepthFirstSearch(jsTree) {
+        // 栈
+        let stack = [];
+        // 进栈
+        stack.push(jsTree);
+
+        // 栈不为空
+        while (stack.length != 0) {
+            // 移除栈的最后一个节点，并保存为node
+            let node = stack.pop();
+            // 最后一个节点的值
+            console.log(node.data);
+            // 存在右孩子，放入
+            if (node.rChild) {
+                stack.push(node.rChild);
+            }
+            // 存在左孩子，放入，左孩子在最后，优先挖左孩子
+            if (node.lChild) {
+                stack.push(node.lChild);
+            }
+        }
+    }
+
+    //广度优先遍历.....非递归、
+    //队列的先进先出
+    function BreadthFirstSearch(jsTree) {
+        // 队列
+        let queue = [];
+        // 入队
+        queue.push(jsTree);
+
+        // 队列不为空
+        while (queue.length != 0) {
+            // 移除队列的第一个节点，并保存为node
+            let node = queue.shift();
+            // 第一个节点的值
+            console.log(node.data);
+            // 存在左孩子，放入左孩子，左孩子在最前，先挖左孩子
+            if (node.lChild) {
+                queue.push(node.lChild);
+            }
+            // 存在右孩子，放入右孩子
+            if (node.rChild) {
+                queue.push(node.rChild);
+            }
+        }
+    }
+
+    // 用已知的二叉树序列创建二叉树
+    // 空白节点使用“#”代替
+
+    //前序遍历得到的字符串
+    let strArr = 'AB#D##C##'.split('');
+
+    //树节点
+    function jsTree(ele) {
+        this.data = ele;
+        this.lChild = null;
+        this.rChild = null;
+    }
+
+    // 最后一个节点暂时为#
+    var newTree = new jsTree('#');
+
+    function createTree(jsTree) {
+        // 二叉树序列为空
+        if (strArr.length == 0) return;
+
+        // 删除序列的第一个节点，并获取其值
+        let str = strArr.shift();
+        // 若值为#，即为空白
+        if (str == '#') return;
+        // 不为空，则值设置为节点值
+        jsTree.data = str;
+        // 第一个节点不为#
+        if (strArr[0] != '#') {
+            // 继续左孩子
+            jsTree.lChild = new jsTree('#')
+        }
+        
+        // 递归左孩子
+        createTree(jsTree.lChild);
+        // 左孩子不为#
+        if (strArr[0] != '#') {
+            // 继续右孩子
+            jsTree.rChild = new jsTree('#')
+        }
+        // 递归右孩子
+        createTree(jsTree.rChild);
+    }
+
+    createTree(newTree);
+    console.log(newTree);
+    ProOrderTraverse(newTree)
+
+    // 
+</script>
