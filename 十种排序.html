@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script type="text/javascript">
+
+    ////////////////////////////////////////// 1、冒泡排序
+    function bubbleSort(array) {
+        for (let i = 0; i < array.length; i++) {
+            let flag = true;
+            for (let j = 0; j < array.length - 1 - i; j++) {
+                if (array[j] > array[j + 1]) {
+                    [array[j], array[j + 1]] = [array[j + 1], arr[j]];
+                    flag = false;
+                }
+            }
+            if (flag) {// 没有冒泡，则停止循环
+                break;
+            }
+        }
+        return array;
+    }
+
+    ///////////////////////////////////////////2、快速排序
+    /*
+    * 法一：开辟left和right两个空间来存储
+    * 每次递归返回left、target、right拼接后的数组
+    */
+    function quickSort(array) {
+        if (array.length < 2) return array;
+        const target = array[0];
+        const left = [], right = [];
+        for (let i = 1; i < array.length; i++) {
+            if (array[i] < target) {
+                left.push(array[i]);
+            } else {
+                right.push(array[i]);
+            }
+        }
+        return quickSort(left).concat([target], quickSort(right));
+    }
+
+    /*！！！！！！！！
+    * 法二：双下标法
+    * 声明l和r分别为首尾两个下标
+    * 在 l < r 条件下，找到 array[r] < target的值赋给array[l]
+    * 在 l < r 条件下，找到 array[r] >= target的值赋给array[r]
+    * 当 l = r 时，左侧的值全部小于 target，右侧的值全部大于target，将target放到此位置
+    * 相对于上一种方法，节省了空间
+    */
+    function quickSort(arr, start, end) {
+        if (end - start < 1) {
+            return;
+        }
+        const target = array[start];
+        let l = start, r = end;
+        while (l < r) {
+            while (l < r && array[r] >= target) {
+                r--;
+            }
+            array[l] = array[r];
+            while (l < r && array[l] < target) {
+                l++;
+            }
+            array[r] = array[l];
+        }
+        array[l] = target;
+        quickSort(array, start, l - 1);
+        quickSort(array, l + 1, end);
+        return array;
+    }
+
+    ///////////////////////////////////////////////3、归并排序
+    // 分割数组时直接将数组分割为两个数组，合并时直接合并数组
+    function mergeSort(array) {
+        if (array.length < 2) {
+            return array;
+        }
+        // 找到中间位置
+        const mid = Math.floor(array.length / 2);
+        // 左数组，用原生方法slice更快捷
+        const left = array.slice(0, mid);
+        // 右数组
+        const right = array.slice(mid);
+        // 递归实现，将最后结果合并
+        return merge(mergeSort(left), mergeSort(right));
+    }
+
+    function merge(left, right) {
+        const result = [];
+        // 左数组右数组都不为空
+        while (left.length && right.length) {
+            // 左数组的小于右数组，左数组的第一个移到结果数组
+            if (left[0] < right[0]) {
+                result.push(left.shift());
+            } else {   //右数组小于左数组或者相等，右数组的第一个移到结果数组
+                result.push(right.shift());
+            }
+        }
+        // 最后哪个数组有剩余的，直接放入
+        while (left.length) {
+            result.push(left.shift());
+        }
+        while (right.length) {
+            result.push(right.shift());
+        }
+        return result;
+    }
+
+    /////////////////////////////////////////////4、选择排序
+    // 每次循环寻找最小的一个放到前面的有序序列
+    // 不好用，不建议使用
+    function selectionSort(array, flag = false) { // flag用于选择顺序 
+        for (let i = 0; i < array.length - 1; i++) {
+            let minIndex = i;
+            for (let j = i + 1; j < array.length; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            [array[minIndex], array[i]] = [array[i], array[minIndex]];
+        }
+        return flag ? arr.reverse() : arr;
+    }
+
+    ////////////////////////////////////////////5、插入排序
+    /**将左侧序列看成一个有序序列，取出下一个元素，从右往左扫描扫描已排序的序列
+     * 如果该元素小于新元素，继续往前扫描，否则将该元素移到下一位
+     * 当找到元素小于或等于新元素的位置时，则停止
+     * 重复以上步骤至整个循环结束*/
+    function insertSort(array) {
+        for (let i = 0; i < array.length; i++) {
+            let preIndex = i - 1, cur = array[i];
+            while (preIndex >= 0 && array[preIndex] > cur) {
+                array[preIndex + 1] = array[preIndex];
+                preIndex--;
+            }
+            array[preIndex + 1] = cur;
+        }
+        return array;
+    }
+
+    ////////////////////////////////////////////6、堆排序
+    /*较为繁琐
+    * 维护堆的性质
+    * @param arr 存储堆的数组
+    * @param n 数组长度
+    * @param i 待维护节点的下标
+    */
+    function heapify(arr, n, i) {
+        let largest = i;
+        let lson = i * 2 + 1;
+        let rson = i * 2 + 2;
+        // 找出父结点、左孩子、右孩子中最大的下标
+        if (lson < n && arr[largest] < arr[lson]) {
+            largest = lson;
+        }
+        if (rson < n && arr[largest] < arr[rson]) {
+            largest = rson;
+        }
+        if (largest !== i) {
+            // 将最大的值赋值给父节点
+            [arr[largest], arr[i]] = [arr[i], arr[largest]];
+            // 因为一个堆被改变了，会影响到子孩子的堆，所以需要进行递归
+            heapify(arr, n, largest);
+        }
+    }
+
+    // 堆排序入口
+    function heap_sort(arr, n) {
+        let i;
+        // 建堆 [(n/2)-1] ---> [((n-1)-1)/2]，从后往前建堆
+        for (i = (n / 2) - 1; i >= 0; i--) {
+            heapify(arr, n, i);
+        }
+
+        // 排序 大顶堆堆顶元素与最后一个元素交换
+        for (i = n - 1; i >= 0; i--) {
+            [arr[i], arr[0]] = [arr[0], arr[i]];
+            heapify(arr, i, 0);// 维护堆顶的元素
+        }
+        return arr;
+    }
+
+    ///////////////////////////////////////////////7、希尔排序
+    /**
+     * 先对整个数组进行分组，通常为总长度的一半（奇偶数均可），这里我们将间隔设置为t。
+     * 先让数组中任意间隔为t的元素有序，再不断地将t缩小一半，继续做排序，直到t=1为止
+     * 当t=1时，数组已经是有序的了。
+    */
+    function shellSort(arr) {
+        let len = arr.length, gap, temp;
+        // 缩小增量gap
+        for (gap = len >> 1; gap >= 1; gap >>= 1) {
+            for (let i = gap; i < len; i++) {
+                let preIndex = i - gap;// 插入排序是从后往前的，preIndex代表当前元素的上一个元素
+                if (arr[i] < arr[preIndex]) {
+                    temp = arr[i];
+                    while (preIndex >= 0 && arr[preIndex] > temp) {
+                        arr[preIndex + gap] = arr[preIndex];
+                        preIndex -= gap;
+                    }
+                    arr[preIndex + gap] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
+    //////////////////////////////////////////////8、计数排序
+    // 该排序适合对一定范围内的整数进行排序，空间取决于最大的数字。
+    /**
+     * 获取待排序数组的最大值，最小值，算出差值，如果最小值为负数
+     * 创建数组用于统计元素个数
+     * 遍历统计数组，按照统计数组中每个元素的个数和顺序将原数组元素加入结果数组
+    */
+    function countingSort(arr, flag = 0) {
+        let min = arr[0], max = arr[0], len = arr.length;
+        // 求最大最小值
+        for (let i = 0; i < len; i++) {
+            max = Math.max(arr[i], max);
+            min = Math.min(arr[i], min);
+        }
+        // 计算差值
+        let s = max - min;
+        console.log(s)
+        // 创建数组用于统计元素个数
+        let count = new Array(s).fill(0);
+        for (let i = 0; i < len; i++) {
+            let index = arr[i] - min;// 创建下标
+            count[index] += 1;
+        }
+        console.log(count)
+        // 遍历统计数组，按照统计数组中每个元素的个数和顺序将原数组元素加入结果数组
+        let res = [];
+        for (let i = 0; i < s + 1; i++) {
+            if (count[i] === 0) continue;
+            res.push(arr[arr.indexOf(i + min)]);
+            --count[i];
+        }
+        return flag ? res.reverse() : res;
+    }
+
+    ///////////////////////////////////////////////////9、桶排序
+    /**
+     * 每一个桶代表一个区间范围，里面可以承载一个或多个元素，首先我们要创建这些桶并明确每个桶的区间范围。区间大小 = （最大值 - 最小值）/ 桶的数量
+     * 遍历原始数组，把各元素放入各自的桶中
+     * 每个桶内的元素分别排序
+     * 遍历所有桶，输出所有元素
+    */
+    function bucketSort(arr, size = 10) {
+        let max = Math.max(...arr),
+            min = Math.min(...arr),
+            count = Math.floor((max - min) / size) + 1;// 设置区间大小
+        let buckets = [];
+        for (let i = 0; i < count; i++) {
+            // 创建桶
+            buckets.push([]);
+        }
+        for (val of arr) {
+            // 把每个元素归类，num表示桶的序号
+            let num = Math.floor((val - min) / size);
+            buckets[num].push(val);
+        }
+        let result = [];
+        for (bucket of buckets) {
+            // 排序用任一排序算法都可以，如果数据量不大可以使用插入排序
+            result.push(...insertSort(bucket));
+        }
+        return result;
+    }
+    // 插入排序
+    function insertSort(arr) {
+        for (let i = 1; i < arr.length; i++) {
+            let j = i;
+            let target = arr[j];
+            while (j > 0 && arr[j - 1] > target) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = target;
+        }
+        return arr;
+    }
+
+    ////////////////////////////////////////////////////////////10、基数排序
+    /**
+     * 设置大小范围为0 - 9的10个桶，然后把具有相同的数值的数放进桶
+     * 再把桶里的数按照0到9号桶的顺序取出来，重复个位、十位、百位......
+     * 最后排序完成
+    */
+    function radixSort(arr) {
+        let maxLen = 0;
+        // 算出最大值的位数
+        for (let val of arr) {
+            let len = String(val).length;
+            if (len > maxLen) {
+                maxLen = len;
+            }
+        }
+        // 遍历各个位数并进行排序
+        for (let i = 1; i <= maxLen; i++) {
+            arr = sort(arr, i, maxLen);
+        }
+        return arr;
+    }
+    // 对位数的排序
+    function sort(arr, index, maxLen) {
+        let buckets = [];
+        for (let i = 0; i < 10; i++) {
+            // 创建十个桶
+            buckets.push([]);
+        }
+        for (let val of arr) {
+            // str.padStart(targetLength,string)：
+            // 使用指定字符串填充到目标字符串前面，使其达到目标长度；
+            // 位数不够则进行补0
+            let str = String(val).padStart(maxLen, '0');
+            // 将对应数值的存入对应的桶
+            let num = str[maxLen - index];
+            buckets[num].push(val);
+        }
+        let result = [];
+        for (let bucket of buckets) {
+            result.push(...bucket);
+        }
+        return result;
+    }
+</script>
