@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 题目来源：牛客网 -->
+<body>
+<!--请补全JavaScript代码，要求将字符串参数URL中的参数解析并以对象的形式返回。
+示例1
+输入：
+getParams('https://nowcoder.com/online?id=1&salas=1000')
+输出：
+{id:1, salas: 1000}  -->
+</body>
+
+</html>
+<script type="text/javascript">
+    const _getParams = (url) => {
+        // 补全代码
+        let obj={}
+        var params=url.split('?')[1].split('&');
+        for(let i=0;i<params.length;i++){
+            let temp=params[i].split('=');
+            obj[temp[0]]=temp[1];
+            // 注意，这里是Object[key]=value
+            // 不是，Objdect.key=value
+            // 因为key是赋值获得的
+        }
+    return obj;
+    }
+
+    console.log(_getParams('https://nowcoder.com/online?id=1&salas=1000'))
+</script>

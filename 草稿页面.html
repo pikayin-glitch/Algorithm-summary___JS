@@ -153,21 +153,73 @@
         return arr
     }
 
-    let a=1;
-    let b=2;
-    function aa(){
-        var a=2
-        let b=3
-        console.log(a);
-        cc=function(){
-            var a=5;
-            console.log(b);
-        }()
-    }
-    function bb(){
-        console.log(b);
-    }
-    aa();
-    bb();
+    // let a=1;
+    // let b=2;
+    // function aa(){
+    //     var a=2
+    //     let b=3
+    //     console.log(a);
+    //     cc=function(){
+    //         var a=5;
+    //         console.log(b);
+    //     }()
+    // }
+    // function bb(){
+    //     console.log(b);
+    // }
+    // aa();
+    // bb();
 
+    const _createPage = (allItem, pageItem) => {
+        // 补全代码
+        var page = Math.ceil(allItem / pageItem);
+        var ul = document.getElementById('ul');
+        let str = '';
+        for (var i = 1; i < page + 1; i++) {
+            str += '<li>' + i + '</li>';
+        }
+        ul.innerHTML = str;
+    }
+    // console.log(_createPage(13,2))
+
+    const _rank = array => {
+        // 补全代码
+        return array.sort((a, b) => {
+            return (b.chinese + b.math + b.english) - (a.chinese + a.math + a.english);
+        })
+    }
+
+    const _searchStrIndexOf = (str, target) => {
+        // 补全代码
+        if (!str.includes(target))
+            return 0;
+        return str.split(target).length - 1;
+    }
+
+    const _isFibonacci = array => {
+        // 补全代码
+        if (!(array[0] === 0 && array[1] === 1 && array[2] === 1))
+            return false;
+        for (var i = 2; i < array.length; i++) {
+            while (array[i] != array[i - 1] + array[i - 2])
+                return false;
+        }
+        return true;
+    }
+
+    const _flatten = arr => {
+    // 补全代码
+    return arr.toString().split(',').map(item => Number(item));
+}
+
+    Number.prototype._isPrime=function(){
+        let value=this.value;
+        for(let i=2;i<Math.acosh(value);i++){
+            if(value%i==0)
+                return false;
+        }
+        return true
+    }
+    var a=3
+    console.log(a._isPrime())
 </script>
