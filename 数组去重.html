@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 基础的数组去重的多种方法 -->
+    <!-- 对引用类型的效果可能不够理想 -->
+    <!-- 以下十二种总结下来无非两类
+    1、两层循环
+    2、利用语法自身键不可重复性 -->
+</body>
+</html>
+<script type="text/javascript">
+    var arr = [1,1,'true','true',true,true,15,15,false,false, undefined,
+    undefined, null,null, NaN, NaN,'NaN', 0, 0,[1,2],[1,2],[1,2,3],[1,2,3],'a', 'a',{},{},{a:1,b:2},{a:1,b:2},{a:1,b:2,c:3}];
+
+    // 第一种，利用ES6 Set去重（ES6中最常用）
+    function unique1(arr){
+        return Array.from(new Set(arr));
+    }
+    //    console.log(unique1(arr));
+    // 这种方法无法去掉‘{}’包含的内容
+
+    // 第二种，利用for嵌套for，然后splice去重（ES5中最常用）
+    function unique2(arr){
+        for(var i=0;i<arr.length;i++){
+            for(var j=i+1;j<arr.length;j++){
+                if(arr[i]===arr[j]){
+                    arr.splice(j,1);
+                    j--;
+                }
+            }
+        }
+        return arr;
+    }
+        // console.log(unique2(arr))
+        // 这种方法除去不了NaN和空对象
+
+    // 第三种，利用indexOf去重
+    function unique3(arr){
+        if(!Array.isArray(arr)){
+            console.log('type error!')
+            return;
+        }
+        var array=[];
+        for(var i=0;i<arr.length;i++){
+            if(array.indexOf(arr[i])===-1){
+                array.push(arr[i])
+            }
+        }
+        return array;
+    }
+    // console.log(unique3(arr));
+
+    // 第四种，利用sort()
+    function unique4(arr){
+        if(!Array.isArray(arr)){
+            console.log('type error!')
+            return;
+        }
+        arr=arr.sort();
+        var array=[arr[0]];
+        for(var i=1;i<arr.length;i++){
+            if(arr[i]!==arr[i-1]){
+                array.push(arr[i]);
+            }
+        }
+        return array;
+    }
+    // console.log(unique4(arr));
+
+    // 第五种，利用对象的属性不能相同的特点进行去重
+    // （有问题，有待改进）
+    function unique5(arr){
+        if(!Array.isArray(arr)){
+            console.log('type error!')
+            return 
+        }
+        var array=[];
+        var obj={};
+        for(var i=0;i<arr.length;i++){
+            if(!obj[arr[i]]){
+                array.push(arr[i]);
+                obj[arr[i]]=1;
+            }
+            else{
+                obj[arr[i]]++;
+            }
+        }
+        return array;
+    }
+    // console.log(unique5(arr));
+
+    // 第六种，利用includes
+    // 
+    function unique6(arr){
+        if(!Array.isArray(arr)){
+            console.log('type error!')
+            return
+        }
+        var array=[];
+        for(let i=0;i<arr.length;i++){
+            if(!array.includes(arr[i])){//include检测数组是否有某个值
+                array.push(arr[i]);
+            }
+        }
+        return array;
+    }
+    // console.log(unique6(arr))
+
+    // 第七种，利用hasOwnProperty,!可以删除重复的{}空数组，所有的都去重了
+    function unique7(arr){
+        var obj={};
+        return arr.filter(function(item,index,arr){
+            return obj.hasOwnProperty(typeof item+item)?false:(obj[typeof item+item]=true)
+        })
+    }
+
+    console.log(unique7(arr))
+
+    // 第八种，利用filter
+    function unique8(arr){
+        return arr.filter(function(item,index,arr){
+            return arr.indexOf(item,0)===index;
+        });
+    }
+    // console.log(unique8(arr));
+
+    // 第九种,利用递归去重
+    function unique9(arr){
+        var array=arr;
+        var len=array.length;
+
+        array.sort(function(a,b){
+            return a-b;
+        })
+
+        function loop(index){
+            if(index>=1){
+                if(array[index]===array[index-1]){
+                    array.splice(index,1);
+                }
+                loop(index-1);
+            }
+        }
+        loop(len-1);
+        return array;
+    }
+    // console.log(unique9(arr));
+
+    // 第十种，利用Map数据结构去重
+    function unique10(arr){
+        let map=new Map();
+        let array=new Array();//数组用于返回结果
+        for(let i=0;i<arr.length;i++){
+            if(map.has(arr[i])){//如果有该key值
+                map.set(arr[i],true);
+            }
+            else{
+                map.set(arr[i],false);//如果没有该key值
+                array.push(arr[i])
+            }
+        }
+        return array;
+    }
+    // 创建一个空Map数据结构，遍历需要去重的数组，把数组的每一个元素
+    //作为key存到Map中。由于Map中不会出现相同的key值，所以最终得到的就是去重后的结果。
+
+    // console.log(unique10(arr));
+
+    // 第十一种,利用reduce+includes
+    function unique11(arr){
+        return arr.reduce((prev,cur)=>prev.includes(cur)?prev:[...prev,cur],[]);
+    }
+    // console.log(unique11(arr));
+
+    // 第十一种
+    function unique12(arr){
+        return [...new Set(arr)];
+    }
+    // console.log(unique12(arr));
+</script>

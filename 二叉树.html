@@ -54,7 +54,7 @@
          *                  A
          *               B     C
          *            D      E   F
-         *          G   H      I
+         *          G   H     r I
         */
 
     }
@@ -185,23 +185,22 @@
         // 第一个节点不为#
         if (strArr[0] != '#') {
             // 继续左孩子
-            jsTree.lChild = new JsTree('#')
+            jsTree.lChild = new JsTree('#');
         }
+
         
         // 递归左孩子
         createTree(jsTree.lChild);
         // 左孩子不为#
         if (strArr[0] != '#') {
             // 继续右孩子
-            jsTree.rChild = new JsTree('#')
+            jsTree.rChild = new JsTree('#');
         }
         // 递归右孩子
         createTree(jsTree.rChild);
     }
-
     createTree(newTree);
     console.log(newTree);
-    ProOrderTraverse(newTree)
+    ProOrderTraverse(newTree);
 
-    // 
 </script>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>题目描述</header>
+    <p>给定一个数组nums，还有一个目标数target，实现一个函数twoSum，
+        从数组中找出两个数字，使得其和为target。（返回结果为数组，
+        包含两个数字在nums中的index，要求时间复杂度尽量低）</p>
+    <p>题目来源：多益网络</p>
+</body>
+</html>
+<script type="text/javascript">
+    /**
+     * 思路，先从前往后找到第一个比目标数字小的，
+     * 再寻找另外一个与之和为目标数的；
+    */
+    function twoSum(arr,target){
+        if(arr.length<=1) return;
+        if(arr.length===2)  return arr[0]+arr[1]===target?[0,1]:'';
+        for(let i=0;i<arr.length-1;i++){
+            if(arr[i]>=target)
+                continue;
+            for(let j=i+1;j<arr.length;j++){
+                if(arr[i]+arr[j]===target)
+                    return [i,j]
+            }
+        }
+    }
+
+    var nums=[11,2,7,5,3,8,1];
+    target=10;
+    var arr=twoSum(nums,target);
+    console.log(arr)
+</script>

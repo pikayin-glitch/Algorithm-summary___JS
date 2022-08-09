@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>javascript数组方法</h1>
+    <h2>Array.map()</h2> √
+    <h2>Array.filter()</h2> √
+    <h2>Array.reduce()</h2> √
+    <h2>Array.reduceRight()</h2>
+    <h2>Array.fill()</h2>
+    <h2>Araay.find()</h2> √
+    <h2>Array.indexOf()</h2>√
+    <h2>Array.lastIndexOf()</h2> √
+    <h2>Array.findIndex()</h2> √
+    <h2>Array.includes()</h2> √
+    <h2>Array.pop()</h2> √
+    <h2>Array.push()</h2> √
+    <h2>Array.shift()</h2> √
+    <h2>Array.unshift()</h2> √
+    <h2>Array.splice()</h2>
+    <!-- start,num
+            改变原数组 -->
+    <h2>Array.slice()</h2>
+    <!-- 索引，包前不包后
+                    不改变原数组 -->
+    <h2>Array.join()</h2> √
+    <h2>Array.reverse()</h2> √
+    <h2>Array.sort()</h2> √
+    <h2>Array.some()</h2>
+    <h2>Array.every()</h2>
+    <h2>Array.from()</h2>
+    <h2>Array.of()</h2>
+    <h2>Array.isArray()</h2>
+    <h2>Array.at()</h2>
+    <h2>Array.copyWithin()</h2>
+    <h2>Array.flat()</h2>
+    <h2>Array.flatMap()</h2>
+    <h2>Array.keys()</h2>
+    <h2>Array.values()</h2>
+    <h2>Array.entries()</h2>
+    <h2>Array.includes()</h2>
+
+    <h1>js字符串方法</h1>
+    <h2>str.length</h2>
+    <h2>string.charAt()</h2>
+    <h2>string.charCodeAt()</h2>
+    <h2>string.indexOf()</h2>
+    <h2>string.lastIndexOf()</h2>
+    <h2>string.includes()</h2>
+    <h2>string.startsWith()</h2>
+    <h2>string.endsWith()</h2>
+    <h2>string.concat()</h2>
+    <h2>string.split()</h2>
+    <h2>string.substr()</h2>
+    <h2>string.substring()</h2>
+    <h2>string.slice()</h2>
+    <h2>string.toLowerCase()</h2>
+    <h2>string.toUpperCase()</h2>
+    <h2>string.replace()</h2>
+    <h2>string.match()</h2>
+    <h2>string.search()</h2>
+
+</body>
+
+</html>
+<script type="text/javascript">
+
+    function convertToBinary(num) {
+        var s = num.toString(2);
+        if (s.length < 8)
+            for (i = 0; i < 8 - s.length; i++) {
+                s = "0" + s;
+            }
+    }
+
+    function containsRepeatingLetter(str) {
+        return /([a-zA-Z])\1/.test(str);
+    }
+
+    const _sampleDeepClone = target => {
+        // 补全代码
+        const type = Object.prototype.toString.call(target).slice(8, -1)
+        if (type === 'Object' || type === 'Array') {
+            const res = Array.isArray(target) ? [] : {}
+            for (let key in target) {
+                if (target.hasOwnProperty(key)) {
+                    res[key] = _sampleDeepClone(target[key])
+                }
+            }
+            return res
+        } else {
+            return target
+        }
+    }
+
+    const _getUniqueNums = (start, end, n) => {
+        // 补全代码
+        var a = [];
+        var res = [];
+        for (var i = 0; i < n; i++) {
+            a[i] = Math.ceil(Math.random() * (end - start) + start - 1);
+            while (res.includes(a[i])) {
+                a[i] = Math.ceil(Math.random() * (end - start) + start - 1);
+            }
+            res.push(a[i]);
+        }
+        return res;
+    }
+    // console.log(_getUniqueNums(2,10,2));
+
+    /**
+     *  <button class='up'>销量升序</button>
+        <button class='down'>销量降序</button>
+        <ul></ul>
+    */
+    var cups = [
+        { type: 1, price: 100, color: 'black', sales: 3000, name: '牛客logo马克杯' },
+        { type: 2, price: 40, color: 'blue', sales: 1000, name: '无盖星空杯' },
+        { type: 4, price: 60, color: 'green', sales: 200, name: '老式茶杯' },
+        { type: 3, price: 50, color: 'green', sales: 600, name: '欧式印花杯' }
+    ]
+    var ul = document.querySelector('ul');
+    var upbtn = document.querySelector('.up');
+    var downbtn = document.querySelector('.down');
+    // 补全代码
+    // upbtn.onclick = function up() {
+    //     cups.sort((a, b) => { return a.sales - b.sales });
+    //     show();
+    // }
+    // downbtn.onclick = function down() {
+    //     cups.sort((a, b) => { return b.sales - a.sales });
+    //     show();
+    // }
+    function show() {
+        let str = '';
+        for (let i = 0; i < 4; i++) {
+            str += '<li>' + cups[i].name + '</li>'
+        }
+        ul.innerHTML = str;
+    }
+
+    const _delete = (array, index) => {
+        // 补全代码
+        let arr = array;
+        arr.splice(index, 1);
+        return arr
+    }
+
+    let a=1;
+    let b=2;
+    function aa(){
+        var a=2
+        let b=3
+        console.log(a);
+        cc=function(){
+            var a=5;
+            console.log(b);
+        }()
+    }
+    function bb(){
+        console.log(b);
+    }
+    aa();
+    bb();
+
+</script>

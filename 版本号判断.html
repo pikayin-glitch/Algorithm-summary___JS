@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 题目来源：牛客网
+        变形 -->
+    <!-- 请补全JavaScript代码，该函数接收两个参数分别为旧版本、新版本，当新版本高于旧版本时表明需要更新，返回true，否则返回false。
+注意：
+1. 版本号格式均为"X.X.X"或者"X.X.X"
+2. X∈[0,9]
+3. 当两个版本号相同时，不需要更新 -->
+New<input type="text" name="" id="new">
+Old<input type="text" name="" id="old">
+<button id="btn" onclick="update()"></button>
+<h2 id="res"></h2>
+</body>
+</html>
+
+<script type="text/javascript">
+    const _shouldUpdate = (oldVersion, newVersion) => {
+        // 补全代码
+        let oldArr=oldVersion.split('.');
+        let newArr=newVersion.split('.');
+        if(newArr[0]>oldArr[0]){
+            return "需要更新";
+        }
+        else if(newArr[0]<oldArr[0]){
+            return "不需要更新";
+        }
+        else{
+            if(newArr[1]>oldArr[1])
+            {
+                return "需要更新"
+            }
+            else if(newArr[1]<oldArr[1]){
+                return "不需要更新"
+            }
+            else{
+                if(newArr[2]){
+                    if(oldArr[2]){
+                        if(newArr[2]>oldArr[2])
+                        return "需要更新";
+                        else
+                        return "不需要更新"
+                    }
+                    else
+                    return "需要更新";
+                }
+                else 
+                return "不需要更新"    
+            }
+        }                                 
+    }
+    // 简化函数代码
+    const _shouldUpdate2 = (oldVersion, newVersion) => {
+        // 补全代码
+        let oldArr=oldVersion.split('.');
+        let newArr=newVersion.split('.');
+        // 都是三位数就可以直接比较字符串大小
+        if(oldArr.length===3&&newArr.length===3){
+            if(newVersion>oldVersion){
+                return "需要更新";
+            }
+            else{
+                return "不需要更新";
+            }
+        }   
+        // 存在至少一个是两位数
+        else{
+            if(newArr[0]>oldArr[0]) return "需要更新";
+            if(newArr[0]<oldArr[0]) return "不需要更新";
+            if(newArr[1]>oldArr[1]) return "需要更新";
+            if(newArr[1]<oldArr[1]) return "不需要更新";
+            if(newArr.length>oldArr.length) return "需要更新";
+            if(newArr.length<=oldArr.length) return "不需要更新";
+        }                          
+    }
+    var newv=document.getElementById('new');
+    var oldv=document.getElementById('old');
+    var result=document.getElementById('res');
+
+    function update(){
+        var str=_shouldUpdate2(oldv.value,newv.value);
+        result.innerHTML=''
+        result.innerHTML=str;
+    }
+</script>
