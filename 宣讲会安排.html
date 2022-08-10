@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>一些项目要占用一个会议室宣讲，会议室不能同时容纳两个项目的宣讲。
+        给你每一个项目开始的时间和结束的时间(数组，里面是一个个具体的项目)，
+        你来安排宣讲的日程，要求会议室进行 的宣讲的场次最多。返回这个最多的宣讲场次。
+    </h1>
+</body>
+
+</html>
+<script>
+    /**
+     * 先按照会议的end时间升序排序；
+     * 排除了因为正在进行会议而无法进行的会议（now > obj[i].start）；
+     * 会议能举行，则 res++，并且更新目前时间now （now = obj[i].end;）。*/
+    function getMostCount(obj) {
+        if (!obj || obj.length < 1) {
+            return;
+        }
+        obj.sort(sortEndTime);
+        let res=1,now=obj[0].end;
+        for (let i = 1; i < obj.length; i++) {
+            if (now < obj[i].start) {
+                res++;
+                now = obj[i].end;
+            }
+        }
+        return res;
+    }
+    function sortEndTime(obj1, obj2) {
+        return obj1.end - obj2.end;
+    }
+
+    var obj = [
+        { start: 6, end: 8 },
+        { start: 7, end: 9 },
+        { start: 11, end: 12 },
+        { start: 10, end: 14 },
+        { start: 16, end: 18 },
+        { start: 17.5, end: 21 },
+        { start: 15, end: 17 },
+        { start: 22, end: 23 }
+    ];
+    console.log("最大场次：" + getMostCount(obj));
+
+</script>
