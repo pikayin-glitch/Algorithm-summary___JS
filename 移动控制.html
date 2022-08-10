@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 题目来源：牛客网 -->
+    <!--界面中存在id=jsContainer的节点A，系统会随机生成id为jsLayout的 m行 x n列 表格(m >= 1, n >= 1)，并随机选中一个td节点，请按照如下需求实现bind函数
+1、bind 函数为document绑定keydown事件，当系统触发上(键值38)下(键值40)左(键值37)右(键值39)按键时，请找到当前选中的td节点，并根据当前指令切换高亮节点，具体效果参考以下图片
+2、在第一列往左移动则到达最后一列；在最后一列往右移动则到达第一列；在第一行往上移动则到达最后一行；在最后一行往下移动则到达第一行；
+3、请不要手动调用bind函数
+4、当前界面为系统在节点A中生成 9 * 9 表格并随机选中一个td节点后的效果
+5、请不要手动修改html和css，请不要修改js中的事件绑定方式
+6、不要使用第三方插件  -->
+    <div id="jsContainer">
+        <table class="game">
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="current"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+<style>
+    table.game {
+        font-size: 14px;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    table.game td {
+        border: 1px solid #e1e1e1;
+        padding: 0;
+        height: 30px;
+        text-align: center;
+    }
+
+    table.game td.current {
+        background: #1890ff;
+    }
+</style>
+<script>
+    function bind() {
+
+        document.onkeydown = event => {
+            if (!event) return;
+            var code = event.keyCode || '';
+            if (!{ '37': 1, '38': 1, '39': 1, '40': 1 }[code]) {
+                return;
+            }
+            event.preventDefault && event.preventDefault();
+            //TODO: 请实现按键控制
+            var tr = document.querySelectorAll('tr'); // 所有行
+            var mL = tr.length;// 行数
+            var td = document.querySelectorAll('tr:first-of-type td'); // 第一行
+            var nL = td.length; // 第一行有多少列
+            var tdAll = document.querySelectorAll('td'); // 所有格子
+            var temp;
+            for (var i = 0; i < tdAll.length; i++) {
+                if (tdAll[i].className == 'current') {
+                    temp = i;//记录当前选中元素的下标
+                    tdAll[i].className = '';//去除当前选中元素的样式
+                    break;
+                }
+            }
+            var row = parseInt(temp / nL) // 第几行,从0起
+            var col = temp % nL
+            if (code == '37') {//左
+                //td:nth-of-type()第一个元素从1开始，所以不能直接用行列的值计算
+                if (col == '0') {//如果在第一列往左移动则到达最后一列
+                    tr[row].querySelector('td:nth-of-type(' + Number(nL) + ')').className = 'current'
+                } else {//否则行不变，列-1
+                    tr[row].querySelector('td:nth-of-type(' + Number(col) + ')').className = 'current'
+                }
+            } else if (code == '39') {//右
+                if (col == nL - 1) {//如果在最后一列往右移动则到达第一列
+                    tr[row].querySelector('td:nth-of-type(1)').className = 'current'
+                } else {//否则行不变，列＋1
+                    tr[row].querySelector('td:nth-of-type(' + Number(col + 2) + ')').className = 'current'
+                }
+            } else if (code == '38') {//上
+                if (row == '0') {//如果在第一行往上移动则到达最后一行
+                    tr[mL - 1].querySelector('td:nth-of-type(' + Number(col + 1) + ')').className = 'current'
+                } else {//否则列不变，行-1
+                    tr[row - 1].querySelector('td:nth-of-type(' + Number(col + 1) + ')').className = 'current'
+                }
+            } else if (code == '40') {//下
+                if (row == mL - 1) {//如果在最后一行往下移动则到达第一行
+                    tr[0].querySelector('td:nth-of-type(' + Number(col + 1) + ')').className = 'current'
+                } else {//否则列不变，行+1
+                    tr[row + 1].querySelector('td:nth-of-type(' + Number(col + 1) + ')').className = 'current'
+                }
+            }
+        };
+    }
+</script>

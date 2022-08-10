@@ -277,16 +277,22 @@
         }
         return res;
     }
+
     var arr = [1, 2, 3];
+
     var fn = function (x) {
         return x * x;
     }
 
-    function second(second) {
+    function createModule(str1, str2) {
+        var obj = {
+            greeting: str1,
+            name: str2,
 
-    }
-
-    function render(data) {
-
+            sayIt: function () {
+                return this.greeting + ', ' + this.name;
+            }
+        }
+        return obj;
     }
 </script>
