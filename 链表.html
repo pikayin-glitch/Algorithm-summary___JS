@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script type="text/javascript">
+    // 使用JavaScript实现链表
+    // 定义一个节点
+
+    // 有头链表
+    function LinkList() {
+        let Node = function (data) {
+            this.data = data;
+            this.next = null;
+        }
+        let length = 0;
+        let head = null;//头节点
+        let tail = null;//尾节点
+
+        // 实现链表的方法
+        // 尾部插入节点
+        this.append = (data) => {
+            // 创造一个新的节点
+            let newnode = new Node(data);
+
+            // 判断是否为空链表
+            if (head === null) {
+                head = newnode;
+                tail = head;
+            }
+            else {
+                // 尾指针指向新创建的节点
+                tail.next = newnode
+                // 尾节点等于新创建的节点
+                tail = newnode;
+            }
+            length++;
+        }
+
+        // 节点插入指定位置
+        this.insert = (index, data) => {
+            // 不合法的索引
+            if (index < 0 || index > length)
+                return;
+            // 索引等于数组长度，尾插进去
+            if (index === length) {
+                return this.append(data);
+            }
+            else {
+                let newnode = new Node(data);
+                // 放到第一个节点前面
+                if (index === 0) {
+                    newnode.next = head;
+                    head = newnode;
+                }
+                else {
+                    let insert_index = 1;
+                    let curnode = head;
+                    while (insert_index < index) {
+                        insert_index++;
+                        curnode = curnode.next;
+                    }
+                    let next_node = curnode.next;
+                    curnode.next = newnode;
+                    newnode.next = next_node;
+                }
+            }
+            length++;
+        }
+
+        // 删除指定位置的节点
+        this.remove = (index) => {
+            // 非法索引
+            if (index < 0 || index > length)
+                return;
+            if (index === 0) {
+                let delnode = head;
+                head = head.next;
+                delnode.next = null;
+            }
+            else {
+                let del_index = 0;
+                let prenode = null; //要删除节点的前一个节点
+                let curnode = head; //要删除的节点
+                while (del_index < index) {
+                    del_index++;
+                    prenode = curnode;
+                    curnode = curnode.next;
+                }
+                let delnode = curnode;
+                prenode.next = curnode.next; //要删除节点的前一个节点的下一个节点等于要删除节点的下一个节点
+                delnode.next = null;  //脱离链表
+                if (curnode.next = n == ull) {
+                    tail = prenode;
+                }
+            }
+            length--;
+        }
+
+        // 返回指定位置节点
+        this.get = (index) => {
+            if (index >= length || index < 0) {
+                return false
+            }
+            let node_index = 0
+            let curnode = head
+            while (node_index < index) {
+                node_index++
+                curnode = curnode.next
+            }
+            return curnode.data
+        }
+    }
+
+</script>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script type="text/javascript">
+    // 双向链表的实现
+    // 双向链表的每个节点有三个部分  指向前一个指针的pre 自身数据域element 指向下一个节点的next
+    function LinkList() {
+        // 定义结点对象
+        function Node(element) {
+            this.element = element
+            this.next = null
+            this.previous = null
+        }
+        function find(element) {
+            var currentNode = this.head
+            while (currentNode.element != element) {
+                if (currentNode.next == null) {
+                    console.log('can not find this node; maybe not have this node')
+                    return 'error'
+                }
+                currentNode = currentNode.next
+            }
+            return currentNode
+        }
+        function insert(newelement, currentelement) {
+            var newNode = new Node(newelement)
+            var currentNode = this.find(currentelement)
+            if (currentNode === 'error') {
+                console.log('无法插入，要插入节点不存在')
+                return
+            }
+            if (currentNode.next != null) {
+                newNode.next = currentNode.next
+                currentNode.next = newNode
+                newNode.previous = currentNode
+                newNode.next.previous = newNode
+            } else {
+                currentNode.next = newNode
+                newNode.previous = currentNode
+            }
+        }
+        function remove(element) {
+            var currentNode = this.find(element)
+            if (currentNode === 'error') {
+                console.log('要移除节点不存在')
+                return
+            }
+            /*首先是不是头尾节点的情况*/
+
+            if (currentNode.next != null && currentNode.previous != null) {
+                currentNode.previous.next = currentNode.next
+                currentNode.next.previous = currentNode.previous
+                currentNode.next = null
+                currentNode.previous = null
+            } else if (currentNode.previous == null) {
+                /*当是头节点的时候*/
+                this.head = currentNode.next
+                currentNode.next.previous = null
+                currentNode.next = null
+            } else if (currentNode.next == null) {
+                /*当是尾节点的时候 */
+
+                currentNode.previous.next = null
+                currentNode.previous = null
+            }
+        }
+        function showlist() {
+            var head = this.head
+            do {
+                console.log(head.element)
+                head = head.next
+            } while (head != null)
+            // while (head.next != null) {
+            //   console.log(head.element)
+            //   head = head.next
+            // }
+        }
+        function initlist() {
+            this.head = new Node('one')
+            this.find = find
+            this.insert = insert
+            this.remove =remove
+            this.showlist = showlist
+            this.lastNode = lastNode
+            this.append = append
+        }
+        function append(element) {
+            var lastnode = this.lastNode()
+            var newNode = new Node(element)
+            lastnode.next = newNode
+            newNode.previous = lastnode
+        }
+        function lastNode() {
+            var head = this.head
+            while (head.next != null) {
+                head = head.next
+            }
+            return head
+        }
+        var list = new initlist()
+        list.insert('two', 'one')
+        list.insert('four', 'two')
+        list.insert('three', 'two')
+
+        // console.log(list.head.next)
+        list.showlist()
+        list.append('A')
+        list.append('B')
+        list.insert('B2', 'B')
+        list.showlist()
+        console.log(list.lastNode())
+        // list.remove('one')
+        // list.showlist()
+        console.log(list.find('A').previous)
+        // console.log(list.find('four').previous)
+        // console.log(list.head.element)
+
+
+    }
+</script>

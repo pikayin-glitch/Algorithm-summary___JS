@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 题目来源：牛客网 -->
+    <!-- 具体功能和需求如下：
+1、单选组件请在 div.checkgroup 元素加上class radius
+2、选中时，请在对应选项dom元素加上class selected
+3、点击单选选项，如果未选中当前选项则选中当前选项并取消其他选项，否则取消当前选项
+4、点击多选选项，如果未选中当前选项则选中当前选项，否则取消当前选项
+5、给定的options中, text和value属性的值均为非空字符串
+6、val方法的参数和返回值均为数组(单选时数组长度不超过)
+7、请阅读代码，并根据注释完成对应代码(方法initHtml、toggleEl、isSelected、val)
+8、请不要手动修改html和css
+9、不要使用第三方插件 -->
+    <div id="jsCheckGroup">
+        <div class="checkgroup radius">
+            <div data-val="a" class="item selected">选项a</div>
+            <div data-val="b" class="item">选项b</div>
+            <div data-val="c" class="item">选项c</div>
+            <div data-val="d" class="item">选项d</div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+function CheckGroup(renderTo, options, isMultiple) {
+    var that = this;
+    that.renderTo = renderTo;
+    that.options = options;
+    that.isMultiple = !!isMultiple;
+    that.initHtml();
+    that.initEvent();
+}
+CheckGroup.prototype.initHtml = fInitHtml;
+CheckGroup.prototype.initEvent = fInitEvent;
+CheckGroup.prototype.toggleEl = fToggleEl;
+CheckGroup.prototype.isSelected = fIsSelected;
+CheckGroup.prototype.val = fVal;
+
+function fInitHtml() {
+    var that = this;
+    // 请补全代码，拼接html字符串
+    var sHtml = ''
+    that.options.forEach(el=>{
+        sHtml += `<div data-val="${el.value}" class="item">${el.text}</div>`;
+    })
+    sHtml = `<div class="checkgroup${that.isMultiple?'':' radius'}">${sHtml}</div>`;
+    that.renderTo.innerHTML = sHtml;
+    // 请补全代码，获取checkgroup的dom元素引用
+    that.el = document.querySelector('.checkgroup');
+}
+ 
+function fInitEvent() {
+    var that = this;
+    that.el && that.el.addEventListener('click', function (event) {
+        var item = event.target;
+        item.classList.contains('item') && that.toggleEl(item);
+    });
+}
+ 
+function fToggleEl(item) {
+    // 根据当前是单选还是多选，以及当前元素是否选中，高亮/取消���亮指定的选项dom元素
+    var that = this;
+    if (that.isSelected(item)) {
+        item.classList.remove('selected');
+        item.selected = false;
+        // 请补全代码
+    } else if (that.isMultiple) {
+        // 请补全代码
+        item.classList.add('selected');
+    } else { //单选
+        // 请补全代码
+        if(item.parentElement.innerHTML.includes('selected')){
+            item.parentElement.querySelector('.selected').classList.remove('selected');
+        }
+        item.classList.add('selected');
+    }
+}
+ 
+function fIsSelected(item) {
+    // 请补全代码，判断item是否选中
+    return item.className.includes('selected');
+}
+ 
+function fVal(values) {
+    var that = this;
+    if (arguments.length === 0) {
+         
+        // 请补全代码，获取高亮的选项元素
+        var items = that.el.querySelectorAll('.selected');
+        // 请补全代码，获取高亮的选项元素的data-val
+        var result = [];
+        Array.from(items).forEach(el=>{
+            result.push(el.getAttribute('data-val'));
+        })
+        return result;
+    }
+    !that.isMultiple && values.length > 1 && (values.length = 1);
+    // 请补全代码，获取所有的选项元素
+    var items = that.el.querySelectorAll('.item');
+    // 请补全代码，在指定元素上加上高亮的class
+    Array.from(items).forEach(el=>{
+        if(values.indexOf(el.getAttribute('data-val'))!=-1){
+            that.toggleEl(el);
+        }
+    })
+}
+</script>
+
+<style lang="css">
+.checkgroup .item{
+    height: 42px;
+    line-height: 42px;
+    padding: 0 10px;
+    margin: 10px 0;
+    border: 1px solid #c7c7c7;
+    border-radius: 6px;
+}
+.checkgroup.radius .item{
+    border-radius: 21px;
+}
+.checkgroup .item.selected{
+    border: 1px solid #08b292;
+    background: #08b292;
+    color: #ffffff;
+}
+</style>
