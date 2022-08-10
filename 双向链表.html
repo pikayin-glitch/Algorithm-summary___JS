@@ -16,7 +16,7 @@
 <script type="text/javascript">
     // 双向链表的实现
     // 双向链表的每个节点有三个部分  指向前一个指针的pre 自身数据域element 指向下一个节点的next
-    function LinkList() {
+
         // 定义结点对象
         function Node(element) {
             this.element = element
@@ -27,8 +27,8 @@
             var currentNode = this.head
             while (currentNode.element != element) {
                 if (currentNode.next == null) {
-                    console.log('can not find this node; maybe not have this node')
-                    return 'error'
+                    console.log('can not find this node; maybe not have this node');
+                    return 'error';
                 }
                 currentNode = currentNode.next
             }
@@ -128,5 +128,5 @@
         // console.log(list.head.element)
 
 
-    }
+    
 </script>
