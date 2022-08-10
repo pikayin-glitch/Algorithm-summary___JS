@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h4>
+        把A杆上的金盘全部移到C杆上，并仍保持原有顺序叠好。操作规则：每次只能移动一个盘子，
+        并且在移动过程中三根杆上都始终保持大盘在下，小盘在上，
+        操作过程中盘子可以置于A、B、C任一杆上。
+    </h4>
+</body>
+
+</html>
+<script type="text/javascript">
+    /***
+     * 思路：
+     * 递归解决：把问题转化为规模缩小了的同类问题的子问题；
+     * 明确递归结束的条件(base case)：n == 1
+     * 其他过程：from：来源地；to：目的地；help：辅助。
+     */
+    function hanoiProcess(n, from, to, help) {
+        if (n < 1) {
+            return;
+        }
+        if (n == 1) {  // 最后一个从from移到to
+            console.log("Move 1 from " + from + " to " + to);
+        } else {
+            hanoiProcess(n - 1, from, help, to);  // 前n-1个从from移到help上，可以借助to
+            console.log("Move " + n + " from " + from + " to " + to);
+            hanoiProcess(n - 1, help, to, from);  // 再把n-1个从help移到to，可以借助from
+        }
+    }
+    hanoiProcess(3, "左", "右", "中")
+
+</script>
