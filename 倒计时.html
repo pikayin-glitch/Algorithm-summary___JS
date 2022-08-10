@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 题目来源：牛客网/百度 -->
+    <!-- 倒计时是web开发中常见的组件，请完成second和render两个函数，完成倒计时的显示部分
+1、second函数的输入为整数，返回{day: Int, hour: Int, min: Int, second: Int}
+2、render函数的输入为second函数的输出，将数据在页面对应的DOM元素上显示出来，格式如html所示
+3、如果day为0，隐藏对应的DOM元素，否则显示（请直接使用已经实现的css代码）
+4、数值不足两位，前面补充0 -->
+<div id="jsCountdown">
+    <span>01天</span>
+    <span>02:</span>
+    <span>03:</span>
+    <span>04</span>
+</div>
+</body>
+</html>
+<style lang="css">
+.hide{
+	display: none;
+}
+</style>
+
+<script type="text/javascript">
+function second(second) {
+    var day=Math.floor(second/60/60/24);
+    var daycost=24*60*60*day;
+    var hour=Math.floor((second-daycost)/60/60);
+    var hourcost=60*60*hour;
+    var min=Math.floor((second-daycost-hourcost)/60);
+    var mincost=60*min;
+    var second=Math.floor((second-daycost-hourcost-mincost));
+    return {day,hour,min,second};
+}
+
+function render(data) {
+    let spans=document.getElementsByTagName('span');
+    if(data.day===0)
+        spans[0].setAttribute('class','hide');
+    spans[0].innerHTML=`${data.day<10?'0'+data.day:data.day}天`;
+    spans[1].innerHTML=`${data.hour<10?'0'+data.hour:data.hour}:`;
+    spans[2].innerHTML=`${data.min<10?'0'+data.min:data.min}:`;
+    spans[3].innerHTML=`${data.second<10?'0'+data.second:data.second}`;
+}
+render(second(123601));
+</script>

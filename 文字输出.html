@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 题目来源：牛客网//百度 -->
+<!-- 页面上存在id为jsBlink的下划线闪动节点，请按照如下需求实现 output 函数
+1、函数 output 接收一个字符串参数，每隔200毫秒在闪动节点之前逐个显示字符
+2、请新建span节点放置每个字符，其中span必须存在class "word"，并随机加上 color1 ~ color24 中的任一个class（请使用系统随机函数）
+3、每次输出指定字符串前，请将闪动节点之前的所有其他节点移除
+4、不要销毁或者重新创建闪动节点
+5、如果输出字符为空格、<、>，请分别对其进行HTML转义，如果是\n请直接输出<br />，其他字符不需要做处理
+6、请不要手动调用output函数
+7、当前界面为系统执行 output('hello world\n你好世界') 之后，最终的界面，过程请参考以下图片
+8、请不要手动修改html和css
+9、不要使用第三方插件
+10、请使用ES5语法 -->
+
+<body>
+    <div class="content">
+        <span class="word color23">h</span>
+        <span class="word color22">e</span>
+        <span class="word color4">l</span>
+        <span class="word color24">l</span>
+        <span class="word color17">o</span>
+        <span class="word color2">&nbsp;</span>
+        <span class="word color9">w</span>
+        <span class="word color3">o</span>
+        <span class="word color1">r</span>
+        <span class="word color23">l</span>
+        <span class="word color15">d</span>
+        <br>
+        <span class="word color15">你</span>
+        <span class="word color13">好</span>
+        <span class="word color16">世</span>
+        <span class="word color19">界</span>
+        <span class="blink" id="jsBlink">|</span>
+    </div>
+</body>
+
+</html>
+
+<style>
+    html,
+    body {
+        margin: 0;
+    }
+
+    .color1 {
+        color: #E60012;
+    }
+
+    .color2 {
+        color: #EB6100;
+    }
+
+    .color3 {
+        color: #F39800;
+    }
+
+    .color4 {
+        color: #FCC800;
+    }
+
+    .color5 {
+        color: #FFF100;
+    }
+
+    .color6 {
+        color: #CFDB00;
+    }
+
+    .color7 {
+        color: #8FC31F;
+    }
+
+    .color8 {
+        color: #22AC38;
+    }
+
+    .color9 {
+        color: #009944;
+    }
+
+    .color10 {
+        color: #009B6B;
+    }
+
+    .color11 {
+        color: #009E96;
+    }
+
+    .color12 {
+        color: #00A0C1;
+    }
+
+    .color13 {
+        color: #00A0E9;
+    }
+
+    .color14 {
+        color: #0086D1;
+    }
+
+    .color15 {
+        color: #0068B7;
+    }
+
+    .color16 {
+        color: #00479D;
+    }
+
+    .color17 {
+        color: #1D2088;
+    }
+
+    .color18 {
+        color: #601986;
+    }
+
+    .color19 {
+        color: #920783;
+    }
+
+    .color20 {
+        color: #BE0081;
+    }
+
+    .color21 {
+        color: #E4007F;
+    }
+
+    .color22 {
+        color: #E5006A;
+    }
+
+    .color23 {
+        color: #E5004F;
+    }
+
+    .color24 {
+        color: #E60033;
+    }
+
+    .word {
+        font-size: 20px;
+    }
+
+    .content {
+        text-align: center;
+        font-size: 0;
+    }
+
+    .blink {
+        font-size: 20px;
+        animation: fade 500ms infinite;
+        -webkit-animation: fade 500ms infinite;
+    }
+
+    @keyframes fade {
+        from {
+            opacity: 1.0;
+        }
+
+        50% {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1.0;
+        }
+    }
+</style>
+
+<script>
+    function output(str) {
+        //删除原有结点
+        var contents = document.getElementsByClassName('content');
+        var jsBlink = document.getElementById('jsBlink');
+        var childs = contents[0].childNodes;
+        while (childs.length > 0) {
+            if (childs[0] == jsBlink) {
+                break;
+            }
+            contents[0].removeChild(childs[0]);
+        }
+        var i = 0;
+        //每隔200毫秒输出字符
+        var fun = setInterval(function () {
+            if (i == str.length) clearInterval(fun);
+            else {
+                var c = str[i];
+                if (c == '\n') {
+                    console.log(c);
+                    var br = document.createElement('br');
+                    contents[0].insertBefore(br, jsBlink);
+                } else {
+                    var newSpan = document.createElement('span');
+                    newSpan.className = "word color" + (Math.floor(Math.random() * 24) + 1);
+                    if (c == '<') {
+                        c = '&lt';
+                    } else if (c == '>') {
+                        c = '&gt';
+                    } else if (c == ' ') {
+                        c = '&nbsp';
+                    }
+                    newSpan.innerHTML = c;
+                    contents[0].insertBefore(newSpan, jsBlink);
+                }
+                i++;
+            }
+        }, 200);
+    }
+    output('尹天才到此一游')
+</script>

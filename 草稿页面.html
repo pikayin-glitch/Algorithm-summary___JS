@@ -208,19 +208,19 @@
     }
 
     const _flatten = arr => {
-    // 补全代码
-    return arr.toString().split(',').map(item => Number(item));
-}
+        // 补全代码
+        return arr.toString().split(',').map(item => Number(item));
+    }
 
-    Number.prototype._isPrime=function(){
-        let value=this.value;
-        for(let i=2;i<Math.acosh(value);i++){
-            if(value%i==0)
+    Number.prototype._isPrime = function () {
+        let value = this.value;
+        for (let i = 2; i < Math.acosh(value); i++) {
+            if (value % i == 0)
                 return false;
         }
         return true
     }
-    var a=3
+    var a = 3
     // console.log(a._isPrime())
 
 
@@ -231,5 +231,62 @@
 
     // const  qwe=123
     // eih();
-    
+
+    function duplicates(arr) {
+        var res = [];
+        arr.map(function (a) {
+            if (arr.indexOf(a) !== arr.lastIndexOf(a) && res.indexOf(a) === -1)
+                res.push(a);
+        })
+        return res;
+    }
+    // 一个元素的首次索引不等于最后一次索引，则这个元素重复出现
+
+    function count(start, end) {
+        if (start <= end) {
+            console.log(start++);
+            st = setTimeout(function () { count(start, end); }, 100)
+        }
+        return {
+            cancel: function () {
+                clearTimeout(st);
+            }
+        }
+    }
+
+    function fizzBuzz(num) {
+        let a = 0, b = 0;
+        if (!(typeof num === 'number' && !isNaN(num)))
+            return false;
+        if (num % 3 === 0) a = 1;
+        if (num % 5 === 0) b = 1;
+        if (a + b === 2) return 'fizzbuzz';
+        if (a + b === 1) {
+            if (a > b) return 'fizz';
+            else return 'buzz';
+        }
+        else return num;
+    }
+
+    function makeClosures(arr, fn) {
+        var res = [];
+        for (let i = 0; i < arr.length; i++) {
+            res[i] = function () {
+                return fn(arr[i]);
+            };
+        }
+        return res;
+    }
+    var arr = [1, 2, 3];
+    var fn = function (x) {
+        return x * x;
+    }
+
+    function second(second) {
+
+    }
+
+    function render(data) {
+
+    }
 </script>
