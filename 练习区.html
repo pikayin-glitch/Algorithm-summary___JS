@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script type="text/javascript">
+    // 百钱百鸡
+    // for(let i=0;i<=100;i++){
+    //     for(let j=0;j<=100;j++){
+    //         for(let t=0;t<=100;t++){
+    //             if(i+j+t==100&&3*t+2*j+i/2==100){
+    //                 console.log('大马'+t+'只  中马'+j+'只  小马'+i+'只');
+    //             }
+    //         }
+    //     }
+    // } 
+
+    //素数
+    // for(var i=2;i<=100;i++){
+    //     var flag=true;
+    //     for(var j=2;j<i;j++){
+    //         if(i%j===0)
+    //         flag=false;
+    //     }
+    //     if(flag===true)
+    //     console.log(i);
+    // }
+
+    // 四则运算 x()y()z()m()n=sum
+    // 有BUG,只能从前向后，下次一定改
+    var x,y,z,m,n,sum;
+    x=3;
+    y=3;
+    z=3;
+    m=3;
+    n=3;
+    sum=15;
+    var str='';
+    for(let i=0;i<4;i++){
+        for(let j=0;j<4;j++){
+            for(let a=0;a<4;a++){
+                for(let b=0;b<4;b++){
+                    let one=turn(x,y,i);
+                    let two=turn(one,z,j);
+                    let three=turn(two,m,a);
+                    let four=turn(three,n,b)
+                    if(four==sum){
+                        ii=o(i),jj=o(j),aa=o(a),bb=o(b)
+                        let str=x+ii+y+jj+z+aa+m+bb+n+'='+sum;
+                        console.log(str)
+                    }
+                }
+            }
+        }
+    }
+
+    function turn(a,b,i){
+            if(i==0){return a+b;}
+            if(i==1){return a-b;}  
+            if(i==2){return a*b;} 
+            if(i==3){return a/b;}
+    }
+    function o(i){
+        if(i==0){return '+';}
+        if(i==1){return '-';}  
+        if(i==2){return '*';} 
+        if(i==3){return '/';}
+    }
+</script>
