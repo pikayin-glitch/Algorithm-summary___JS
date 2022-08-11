@@ -80,7 +80,7 @@ $callback = $_GET['callback'];//得到回调函数名
 $data = array('a','b','c');//要返回的数据
 echo $callback.'('.json_encode($data).')';//输出
 ?>
-</xmp>>
+</xmp>
     </code>
     <h3>最终输出结果为：dosomething(['a','b','c'])</h3>
     <br>
@@ -105,7 +105,27 @@ echo $callback.'('.json_encode($data).')';//输出
         错误处理；<br>
         （3）JSONP主要被老的浏览器支持，它们往往不支持CORS，而绝大多数现代浏览器都已经支持了CORS;
     </h3>
-    <h2></h2>
+    <h2>3、通过修改document.domain来跨子域</h2>
+    <h3>上面的jsonp是来解决ajax跨域请求的，那么如果是需要处理Cookie和iframe该怎么办呢？这时候就
+        可以通过修改document.domain来跨子域。两个网页一级域名相同，只是二级域名不同，浏览器允许通
+        过设置document.domain共享Cookie或者处理iframe。比如A网页是http://w1.example.com/a.html,
+        B网页是http://w2.example.com/b.html，那么只要设置相同的document.domain，两个网页就可以
+        共享Cookie。
+    </h3>
+    <code>
+<xmp>document.domain='example.com';
+//现在，A网页通过脚本设置一个Cookie.
+document.cookie='test1=hello';
+//B网页就可以读到这个cookie
+var allCookie=document.cookie;
+</xmp>
+    </code>
+    
+    <h2>4、使用window.name来进行跨域</h2>
+    <h2>5、使用HTML5的window.postMessage方法跨域</h2>
+    <h2>6、通过Web Socket进行跨域</h2>
+    <h2>7、图像ping(单向)</h2>
+    <h2>8、使用片段识别符才进行跨域</h2>
 </body>
 </html>
 <style lang="css">
@@ -126,5 +146,7 @@ span{
 }
 code{
     font-size: 18px;
+    font-weight:bold;
+    color: rgb(95, 117, 42);
 }
 </style>
