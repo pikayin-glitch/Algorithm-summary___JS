@@ -48,5 +48,6 @@ function render(data) {
     spans[2].innerHTML=`${data.min<10?'0'+data.min:data.min}:`;
     spans[3].innerHTML=`${data.second<10?'0'+data.second:data.second}`;
 }
-render(second(123601));
+var num=123;
+render(second(num));
 </script>
